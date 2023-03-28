@@ -17,6 +17,7 @@ class InfoModel(models.Model):
     admin_telegram_username = models.CharField(max_length=50)
     admin_phone_number = models.CharField(max_length=20)
     bot_username = models.CharField(max_length=50)
+    location = models.TextField()
 
     def __str__(self):
         return self.admin_telegram_username
@@ -24,7 +25,7 @@ class InfoModel(models.Model):
 class UsersModel(models.Model):
     username = models.CharField(max_length=50, null=True)
     telegram_id = models.CharField(max_length=20)
-    lang = models.CharField(max_length=2, blank=True)
+    lang = models.CharField(max_length=2, default='uz')
 
     def __str__(self):
         return self.username

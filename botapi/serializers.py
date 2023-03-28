@@ -21,3 +21,8 @@ class CustomUsersSerializer(serializers.ModelSerializer):
         if UsersModel.objects.filter(telegram_id=user_id).exists():
             raise serializers.ValidationError('User with this id already exists!')
         return data
+    
+class UserPutSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UsersModel
+        fields = ["lang"]
