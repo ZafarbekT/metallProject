@@ -11,7 +11,8 @@ class ProductsModel(models.Model):
 
     @property
     def picture(self):
-        return format_html('<img src="{}" width="50" height="50" style="border-radius: 50%" />'.format(self.image.url))
+        if self.image:
+            return format_html('<img src="{}" width="50" height="50" style="border-radius: 50%" />'.format(self.image.url))
     
 class InfoModel(models.Model):
     admin_telegram_username = models.CharField(max_length=50)

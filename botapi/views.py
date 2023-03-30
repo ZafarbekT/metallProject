@@ -38,21 +38,25 @@ class UsersView(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     def put(self, request, pk):
-        user = UsersModel.objects.get(telegram_id=pk)
-        if user:
+        try:
+            user = UsersModel.objects.get(telegram_id=pk)
             serializer = UserPutSerializer(user, data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_200_OK)
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        return Response({"message:": "User not found"}, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            return Response({"message:": "User not found"}, status=status.HTTP_400_BAD_REQUEST)
     
-    def get(self, request, pk):
-        user = UsersModel.objects.filter(telegram_id=pk)
-        serializer = UserPutSerializer(user, many=True)
-        if serializer:
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def get(self, request, pk=None):
+        try:
+            user = UsersModel.objects.get(telegram_id=pk)
+            serializer = UserPutSerializer(user)
+            if serializer:
+                return Response(serializer.data, status=status.HTTP_200_OK)
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        except:
+            return Response({"message": "User not found!"}, status=status.HTTP_400_BAD_REQUEST)
     
 # class UserPutLangView(APIView):
     
